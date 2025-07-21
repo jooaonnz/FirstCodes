@@ -1,25 +1,47 @@
-import 'dart:ffi';
 import 'dart:io';
 
+import 'User.dart';
 
 void main(){
-print('Informe seu nome completo: ');
+print('Informe seu nome: ');
 String? name = stdin.readLineSync();
 
-stdout.write('Informe sua data de nascimento! \n');
+print('Informe seu segundo nome: ');
+String? lastName = stdin.readLineSync();
 
-print('Informe o dia:');
+stdout.write('Informe seu cpf:');
+String? cpf = stdin.readLineSync();
+int cpfInt = ConvertNumber(cpf);
+
+print('Informe data do seu nascimento no formato dd/mm/aaaa');
+stdout.write('Informe o dia de seu nascimento:');
 String? day = stdin.readLineSync();
 int dayInt = ConvertNumber(day);
 
-print('Informe o mês:');
+stdout.write('Informe o mês:');
 String? month = stdin.readLineSync();
 int monthInt = ConvertNumber(month);
 
-print('Informe o ano no formato 0000:');
-String? year = stdin.readLineSync();
-int yearInt = ConvertNumber(year);
+int yearInt;
+bool loop = false;
+String n = '0000';
 
+do {
+stdout.write('Informe o ano no formato quatro dígitos **** :');
+String? year = stdin.readLineSync();
+yearInt = ConvertNumber(year);  
+
+if(year != null && year.length < n.length ){
+  print('ERROr $year: O ano deve estar no formato aaaa!!');
+  loop = true;
+}
+
+else {
+  print('$dayInt/$monthInt/$yearInt');
+  loop = false;
+}
+
+} while (loop);
 
 if(MoreEighteen(yearInt) == true){
   print(' Você é maior de idade!');
@@ -53,7 +75,6 @@ void Travels(int optionNumber){
 
 }
 
-
 bool MoreEighteen(int year){
  int age = 2025 - year;
  
@@ -65,7 +86,6 @@ bool MoreEighteen(int year){
   }
 }
 
-
 ConvertNumber(String? numberString){
   try{
    var number = int.parse(numberString!);
@@ -73,6 +93,25 @@ ConvertNumber(String? numberString){
   }
   catch(e)
   {
-    throw new Exception('Error');
+    throw new Exception('Error o número não pode ser nulo');
   }
+}
+
+void exemple(){
+  Map<String, String?> usuario1 = {
+    'nome' : 'Alice',
+    'email' : 'Alice@gmail.com',
+    'telefone' : null,
+    'endereco' : null,// não informado
+  };
+
+  print('Cadastro de Usuários:\n');
+  print('Usuário1');
+  String nome = usuario1 ['nome'] ?? 'nome não informado';
+  String email = usuario1 ['email'] ?? 'email não informado';
+  String telefone = usuario1 ['telefone'] ?? 'telefone não informado';
+  String endereco = usuario1 ['endereco'] ?? 'endereco não informado';
+
+print('Nome :$nome');
+
 }
